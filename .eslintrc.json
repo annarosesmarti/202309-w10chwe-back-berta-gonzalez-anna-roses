@@ -13,6 +13,7 @@
           "error",
           "interface"
         ],
+        "no-implicit-coercion": "off",
         "no-unused-vars": "error"
       }
     },
@@ -33,7 +34,6 @@
       {
         "capIsNewExceptions": ["Router"]
       }
-    ],
-    "no-implicit-coercion": "off"
+    ]
   }
 }
