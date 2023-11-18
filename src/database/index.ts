@@ -1,12 +1,14 @@
 import chalk from "chalk";
 import mongoose from "mongoose";
 
-export const connectToDatabase = async (mongoUrl: string) => {
+const connectToDatabase = async (mongoUrl: string) => {
   try {
     await mongoose.connect(mongoUrl);
     mongoose.set("debug", true);
-    console.log(chalk.green("Connected to database"));
-  } catch (error) {
-    console.log(`${error.message} error connecting ddbb`);
+    console.log(chalk.bgGreen("Connected to database"));
+  } catch {
+    console.log(chalk.bgRed("Error connecting to DDBB"));
   }
 };
+
+export default connectToDatabase;
