@@ -5,7 +5,7 @@ import app from "../../../../server/app";
 import "../../../../server/index";
 import connectToDatabase from "../../../../database/index";
 import { type RoboCuteStructure } from "../../types";
-import mockRobocute from "./mockRobocute";
+import mockRobocute from "../../../mocks/mockRobocute";
 import Robocute from "../../model/robocute";
 
 let server: MongoMemoryServer;

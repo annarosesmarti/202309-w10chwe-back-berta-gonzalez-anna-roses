@@ -1,4 +1,4 @@
-import type { RoboCuteStructure } from "../../types";
+import type { RoboCuteStructure } from "../robocute/types";
 
 const robocutes: RoboCuteStructure[] = [
   {
