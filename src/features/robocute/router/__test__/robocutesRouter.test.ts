@@ -25,7 +25,7 @@ describe("Given a GET method with a '/robocute' endpoint", () => {
   describe("When it receives a request", () => {
     test("Then it should response with a status 200 and a list of 2 robocutes", async () => {
       const expectedStatusCode = 200;
-      const path = "/robocutes";
+      const path = "/robocute";
       await Robocute.create(mockRobocute);
 
       const response = await request(app).get(path).expect(expectedStatusCode);
