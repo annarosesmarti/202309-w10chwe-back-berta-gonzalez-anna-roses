@@ -7,12 +7,12 @@ import robocuteRouter from "../features/robocute/router/robocutesRouter.js";
 import notFound from "../features/robocute/middleware/errorMiddleware.js";
 
 app.use(morgan("dev"));
-app.use(express.json());
 app.use(
   cors({
-    origin: "https://two02309-w10chwe-back-berta-gonzalez.onrender.com/",
+    origin: "*",
   }),
 );
+app.use(express.json());
 
 app.use("/", pingRouter);
 app.use("/robots", robocuteRouter);
