@@ -8,4 +8,4 @@ app.use(morgan("dev"));
 app.use(express.json());
 
 app.use("/", pingRouter);
-app.use("/robocutes", robocuteRouter);
+app.use("/robocute", robocuteRouter);
