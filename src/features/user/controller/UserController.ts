@@ -16,9 +16,9 @@ class UserController {
       const userData: JwtPayload = { sub: user._id, name: user.name };
       const token = jwt.sign(userData, process.env.JWT_SECRET_KEY!);
 
-      res.status(200).json({ token: { token } });
-    } catch (error) {
-      res.status(401).json({ error: (error as Error).message });
+      res.status(200).json({ token });
+    } catch {
+      res.status(401).json({ error: "User not found" });
     }
   };
 }
