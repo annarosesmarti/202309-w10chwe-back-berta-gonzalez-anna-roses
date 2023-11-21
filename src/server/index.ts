@@ -10,10 +10,7 @@ import { userRouter } from "../features/user/router/userRouter.js";
 app.use(morgan("dev"));
 app.use(
   cors({
-    origin: [
-      "mongodb+srv://bertaGM:Avecesveocodig0@cluster0.cx04w49.mongodb.net/",
-      "mongodb+srv://bertaGM:Avecesveocodig0@cluster0.cx04w49.mongodb.net/robocute",
-    ],
+    origin: "*",
   }),
 );
 app.use(express.json());

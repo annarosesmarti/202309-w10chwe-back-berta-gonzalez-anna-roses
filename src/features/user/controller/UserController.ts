@@ -1,16 +1,12 @@
 import { type Response } from "express";
-import { type JwtPayload } from "jsonwebtoken";
-import jwt from "jsonwebtoken";
+import jwt, { type JwtPayload } from "jsonwebtoken";
 import { type UserCredentialStructure } from "../types";
 import type UserMongooseRepository from "../repository/userMongooseRepository.js";
 
 class UserController {
   constructor(private readonly userRepository: UserMongooseRepository) {}
 
-  loginUser = async (
-    req: UserCredentialStructure,
-    res: Response,
-  ): Promise<void> => {
+  loginUser = async (req: UserCredentialStructure, res: Response) => {
     try {
       const { username, password } = req.body;
       const user = await this.userRepository.getUser(username, password);
