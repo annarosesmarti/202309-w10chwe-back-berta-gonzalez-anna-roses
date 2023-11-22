@@ -1,5 +1,5 @@
 import "dotenv/config";
-import { type Response } from "express";
+import { type NextFunction, type Response } from "express";
 import jwt from "jsonwebtoken";
 import {
   type UserCredentialStructure,
@@ -7,6 +7,7 @@ import {
 } from "../../types";
 import UserController from "../UserController";
 import type UserMongooseRepository from "../../repository/userMongooseRepository";
+import type CustomError from "../../../../CustomError/CustomError";
 
 beforeEach(() => {
   jest.clearAllMocks();
@@ -23,8 +24,9 @@ describe("Given a UsersController's loginUser method", () => {
     status: jest.fn().mockReturnThis(),
     json: jest.fn().mockReturnThis(),
   };
+  const next: NextFunction = jest.fn();
 
-  describe("When it receives a request with a validated password and a username", () => {
+  describe("When it receives a request with a valid password and a username", () => {
     const expectedStatusCode = 200;
     const userData: UserWithoutPassword = {
       _id: "",
@@ -47,6 +49,7 @@ describe("Given a UsersController's loginUser method", () => {
       await usersController.loginUser(
         req as UserCredentialStructure,
         res as Response,
+        next,
       );
 
       expect(res.status).toHaveBeenCalledWith(expectedStatusCode);
@@ -58,14 +61,13 @@ describe("Given a UsersController's loginUser method", () => {
       await usersController.loginUser(
         req as UserCredentialStructure,
         res as Response,
+        next,
       );
 
       expect(res.json).toHaveBeenCalledWith({ token: { token } });
     });
   });
-  describe("When it receives a request with an invalidated password and username", () => {
-    const expectedWrongStatusCode = 401;
-
+  describe("When it receives a request with an invalid password and username", () => {
     const userRepository: Pick<UserMongooseRepository, "getUser"> = {
       getUser: jest.fn().mockRejectedValue("error"),
     };
@@ -78,20 +80,27 @@ describe("Given a UsersController's loginUser method", () => {
       await usersController.loginUser(
         req as UserCredentialStructure,
         res as Response,
+        next,
       );
 
-      expect(res.status).toHaveBeenCalledWith(expectedWrongStatusCode);
+      const expectedError = { message: "Wrong credentials", statusCode: 401 };
+
+      expect(next).toHaveBeenCalledWith(expect.objectContaining(expectedError));
     });
 
     test("Then it should call the json method of the response with an error message", async () => {
-      const expectedErrorMessage = { error: "User not found" };
+      const expectedError: Partial<CustomError> = {
+        message: "Wrong credentials",
+        statusCode: 401,
+      };
 
       await usersController.loginUser(
         req as UserCredentialStructure,
         res as Response,
+        next,
       );
 
-      expect(res.json).toHaveBeenCalledWith(expectedErrorMessage);
+      expect(next).toHaveBeenCalledWith(expect.objectContaining(expectedError));
     });
   });
 });
