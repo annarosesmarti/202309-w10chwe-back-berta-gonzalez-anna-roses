@@ -5,6 +5,7 @@ import app from "./app.js";
 import pingRouter from "../features/ping/router/pingRouter.js";
 import robocuteRouter from "../features/robocute/router/robocutesRouter.js";
 import { userRouter } from "../features/user/router/userRouter.js";
+import generalError from "./middlewares/errors/generalError.js";
 import notFound from "./middlewares/errors/errorMiddleware.js";
 
 app.use(morgan("dev"));
@@ -19,3 +20,4 @@ app.use("/", pingRouter);
 app.use("/robots", robocuteRouter);
 app.use("/login", userRouter);
 app.use(notFound);
+app.use(generalError);
